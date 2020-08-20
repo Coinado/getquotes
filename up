@@ -1,0 +1,15 @@
+#!/bin/bash
+
+function update () {
+  zip -r ../gq.zip *
+  aws lambda update-function-code --function-name getquotes --zip-file fileb://../gq.zip
+}
+
+echo "Are you sure you want to update production getquotes function?"
+select yn in "Yes" "No"; do
+    case $yn in
+        Yes ) update; break;;
+        No ) exit;;
+    esac
+done
+

@@ -1,0 +1,3 @@
+#!/bin/bash
+zip -r ../testgq.zip *
+aws lambda update-function-code --function-name testgetquotes --zip-file fileb://../testgq.zip
