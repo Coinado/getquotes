@@ -25,7 +25,7 @@ async function dbquery(exchange) {
 
 async function dbinsert({symbol, price}) {
   const vals = `('${symbol}', ${price})`
-  const sql = `insert into books (symbol, price) values ${vals}`
+  const sql = `insert into quotes (symbol, price) values ${vals}`
   console.log({sql})
   await db.any(sql); 
 }
@@ -43,19 +43,23 @@ async function parse(data) {
 async function getQuotes(params) {
   let url = 'https://api.currencylayer.com/live?access_key=287cd9309544e39904696c25aa23f43b';
   let res = '';
+  console.log("Trying to fetch from URL..")
   let response = await fetch(url);
   let data = await response.json();
-  console.log(data);
+  console.log("HTTP fetch complete.")
   let records = await parse(data);
+
   console.log(JSON.stringify(records,null,2));
-  //for (let rec of records) await dbinsert(rec);
+  console.log("Awaiting insert into db")
+  for (let rec of records) await dbinsert(rec);
+  console.log("db insert complete")
   return JSON.stringify(records);
 }
 
 exports.handler = async (event) => {
-    //let text = await getBooks(event)
-    let text = 'ok'
-    await initDB()
+    let text = await getQuotes(event)
+    //let text = 'ok'
+    //await initDB()
     //text = await dbquery()
     const response = {
         statusCode: 200,
