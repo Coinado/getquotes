@@ -5,7 +5,7 @@ const readFile = require('fs').readFileSync;
 
 const pw = process.env.pw
 
-const cn = { host: 'pricesdb3.cerqhtf4ui7b.us-east-2.rds.amazonaws.com',
+const cn = { host: 'pricesdb3.cqgxrixjycku.us-east-2.rds.amazonaws.com',
              port: 5432, database: 'postgres',
              user: 'postgres', password: pw }
 
